@@ -16,6 +16,59 @@
   const statusBadge = document.getElementById("statusBadge");
   const modeTabs    = document.querySelectorAll(".mode-tab");
   const subtypeGroups = document.querySelectorAll(".subtype-group");
+  const btnMic      = document.getElementById("btnMic");
+
+  // ── Voice Input (STT) ────────────────────────────────────────────────
+  let recognizing = false;
+  let recognition;
+
+  if (window.SpeechRecognition || window.webkitSpeechRecognition) {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    recognition = new SpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onstart = () => {
+      recognizing = true;
+      btnMic.classList.add("active");
+      btnMic.title = "Listening... Click to stop.";
+    };
+    recognition.onend = () => {
+      recognizing = false;
+      btnMic.classList.remove("active");
+      btnMic.title = "Speak your text";
+    };
+    recognition.onerror = (event) => {
+      recognizing = false;
+      btnMic.classList.remove("active");
+      btnMic.title = "Speak your text";
+      statusBadge.textContent = "Mic error";
+      statusBadge.className = "status-badge error";
+    };
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      inputText.value += (inputText.value ? " " : "") + transcript;
+      inputText.dispatchEvent(new Event("input"));
+      statusBadge.textContent = "Voice input added";
+      statusBadge.className = "status-badge success";
+    };
+
+    btnMic.addEventListener("click", () => {
+      if (recognizing) {
+        recognition.stop();
+        return;
+      }
+      try {
+        recognition.start();
+      } catch (e) {
+        // Already started
+      }
+    });
+  } else {
+    btnMic.disabled = true;
+    btnMic.title = "Speech Recognition not supported";
+  }
 
   // ── Current selection state ─────────────────────────────────────────────
   let currentMode    = "passage";

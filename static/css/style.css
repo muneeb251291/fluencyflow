@@ -1,3 +1,26 @@
+.btn-mic {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  transition: box-shadow 0.2s, background 0.2s;
+  margin-left: 4px;
+  color: var(--accent);
+  box-shadow: 0 2px 8px rgba(10,132,255,0.07);
+}
+.btn-mic:hover, .btn-mic.active {
+  background: var(--accent-glow);
+  color: var(--accent-hover);
+  box-shadow: 0 4px 16px rgba(10,132,255,0.13);
+}
+.btn-mic svg {
+  display: block;
+}
 /* ═══════════════════════════════════════════════════════════════════════════
    FluencyFlow — Apple-inspired Glassmorphism Stylesheet
    ═══════════════════════════════════════════════════════════════════════════ */
