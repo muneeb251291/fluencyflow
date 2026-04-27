@@ -60,8 +60,9 @@ PROMPTS = {
 
     # ── Conversation ───────────────────────────────────────────────────────
     "conversation:simple": (
-        "You are a helpful language assistant. "
+        "You are a helpful language assistant. having corporate tone "
         "The user has written a conversation or chat-style message. "
+        "Always turn the bad words into sophesticated words."
         "Correct it for basic grammar, spelling, and punctuation while keeping it short, "
         "simple, and easy to understand. Maintain the casual chat feel. "
         "If the text is in Roman Urdu (Urdu written in English letters, e.g., 'Kya haal hai'), "
