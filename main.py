@@ -1,3 +1,6 @@
+# Version 1.0
+# Email: mohammadmuneeb251@gmail.com
+
 from flask import Flask, render_template, request, jsonify
 import google.generativeai as genai
 import os
