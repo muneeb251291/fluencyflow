@@ -121,6 +121,44 @@ git commit -m "Initial commit"
 
 ---
 
+## 🚀 Deployment Option 3: GOOGLE CLOUD RUN (RECOMMENDED)
+
+You can deploy to Google Cloud Run either via the browser (GitHub integration) or using the CLI.
+
+### Option A: Using Git / GitHub Integration (No CLI required)
+
+1. **Push your code to GitHub** (follow Git setup in Option 1, Steps 1 & 2).
+2. Go to the [Google Cloud Run Console](https://console.cloud.google.com/run).
+3. Click **"Create Service"**.
+4. Select **"Continuously deploy new revisions from a source repository"** and click **"Set up with Cloud Build"**.
+5. Connect your GitHub account and select your `fluencyflow` repository.
+6. Under Build Configuration:
+   - Branch: `^main$`
+   - Build Type: **Dockerfile** (it will auto-detect the root `Dockerfile` we created).
+7. Under **"Authentication"**, select **"Allow unauthenticated invocations"** (so the public can visit your web app).
+8. Expand the **"Container(s), Volumes, Connections, Security"** section:
+   - Click the **"Variables & Secrets"** tab.
+   - Click **"Add Variable"**.
+   - Name: `GEMINI_API_KEY`, Value: *Your actual Gemini API key*.
+9. Click **"Create"**. Google Cloud will build the Docker container and deploy the app!
+10. Once complete, you will receive a permanent HTTPS URL (e.g., `https://fluencyflow-xxxxxx.a.run.app`).
+
+### Option B: Using gcloud CLI
+
+If you have the Google Cloud SDK installed locally:
+1. Initialize/login to your GCP account:
+   ```powershell
+   gcloud auth login
+   gcloud config set project YOUR_PROJECT_ID
+   ```
+2. Build and deploy the project directly:
+   ```powershell
+   gcloud run deploy fluencyflow --source . --allow-unauthenticated --set-env-vars GEMINI_API_KEY=your_gemini_api_key_here
+   ```
+3. Follow the prompts to select a region. Once finished, it will output your service URL.
+
+---
+
 ## ⚙️ Update Environment Variables After Deployment
 
 ### For Vercel:
@@ -134,6 +172,14 @@ git commit -m "Initial commit"
 2. Click **"Build & Deploy"** → **"Environment"**
 3. Click **"Edit Variables"**
 4. Update `GEMINI_API_KEY` if needed
+
+### For Google Cloud Run:
+1. Go to your Google Cloud Run Console
+2. Click on your service name (`fluencyflow`)
+3. Click **"Edit & Deploy New Revision"**
+4. Go to **"Variables & Secrets"** tab and update `GEMINI_API_KEY`
+5. Click **"Deploy"**
+
 
 ---
 
